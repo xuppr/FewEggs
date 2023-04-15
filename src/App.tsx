@@ -1,5 +1,30 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root, { rootLoader } from "./pages/Root";
+import ProductsList, { productsListLoader } from "./pages/ProductsList";
+import ProductDetail, { productDetailLoader } from "./pages/ProductDetail";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    loader: rootLoader,
+    element: <Root />,
+    children: [
+      {
+        path: "/products",
+        loader: productsListLoader,
+        element: <ProductsList />,
+      },
+      {
+        path: "/products/:productId",
+        loader: productDetailLoader,
+        element: <ProductDetail />,
+      },
+    ],
+  },
+]);
+
 function App() {
-  return <div>Feweggs store</div>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
