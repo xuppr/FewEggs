@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { rootLoader } from "./pages/Root";
-import ProductsList, { productsListLoader } from "./pages/ProductsList";
+import ProductsList, {
+  productsListFilterLoader,
+  productsListLoader,
+} from "./pages/ProductsList";
 import ProductDetail, { productDetailLoader } from "./pages/ProductDetail";
 import Error from "./pages/Error";
 
@@ -14,6 +17,11 @@ const router = createBrowserRouter([
       {
         path: "/products",
         loader: productsListLoader,
+        element: <ProductsList />,
+      },
+      {
+        path: "/products/:filterName/:filterId",
+        loader: productsListFilterLoader,
         element: <ProductsList />,
       },
       {
