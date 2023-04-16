@@ -29,6 +29,7 @@ const ProductsList = () => {
             brand={brand}
             imageSrc={thumbnail}
             key={id}
+            productId={id}
           />
         ))}
       </div>

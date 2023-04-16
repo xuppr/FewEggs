@@ -80,7 +80,7 @@ const ProductDetail = () => {
         />
       </div>
 
-      <div className="flex flex-col justify-center items-center md:items-start">
+      <div className="flex flex-col justify-center items-center md:items-start max-w-sm">
         <div className="flex flex-col items-center md:items-start">
           <div className="font-semibold text-2xl">{title}</div>
           <div className="font-extralight text-2xl">€{price}</div>
@@ -90,6 +90,7 @@ const ProductDetail = () => {
         <ProductField name="BRAND" value={brand} />
         <ProductField name="CATEGORIA" value={category} />
         <div className="mt-6">
+          <div className="font-semibold text-xl">RECENSIONI</div>
           <RatingBar value={rating} />
         </div>
         <div className="w-fit p-3.5 font-semibold text-xl mt-12 bg-black text-white rounded-3xl md:rounded cursor-pointer transition-transform hover:scale-105 active:scale-100">
