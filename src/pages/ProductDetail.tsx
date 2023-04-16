@@ -6,6 +6,7 @@ import "swiper/swiper-bundle.min.css";
 import SliderController from "../components/sliderController/SliderController";
 import { useState } from "react";
 import { Controller, Autoplay } from "swiper";
+import RatingBar from "../components/ratingBar/RatingBar";
 interface ProductDetailData {
   id: number;
   title: string;
@@ -88,7 +89,9 @@ const ProductDetail = () => {
         <ProductField name="DESCRIZIONE" value={description} />
         <ProductField name="BRAND" value={brand} />
         <ProductField name="CATEGORIA" value={category} />
-        <div className="mt-6">rating: {rating}</div>
+        <div className="mt-6">
+          <RatingBar value={rating} />
+        </div>
         <div className="w-fit p-3.5 font-semibold text-xl mt-12 bg-black text-white rounded-3xl md:rounded cursor-pointer transition-transform hover:scale-105 active:scale-100">
           AGGIUNGI AL CARRELLO
         </div>
