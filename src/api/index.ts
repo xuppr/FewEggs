@@ -6,7 +6,6 @@ export const getAllProducts = async () => {
 };
 
 export const getProduct = async (id: string) => {
-  console.log("GETTING PRODUCT");
   const result = await fetch(`${baseUrl}/${id}`);
   return await result.json();
 };
