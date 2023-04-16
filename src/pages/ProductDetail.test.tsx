@@ -45,7 +45,7 @@ test("renders details for a product", async () => {
         path: "/",
         element: <ProductDetail />,
         loader: () => ({
-          title: "Foo",
+          title: "FooTitle",
           price: 259,
           description: "Foo product by FooBrand",
           brand: "FooBrand",
@@ -60,7 +60,7 @@ test("renders details for a product", async () => {
   render(<RouterProvider router={router} />);
 
   await waitFor(() => {
-    const titleElement = screen.getByText(/Product Detail/i);
+    const titleElement = screen.getByText(/FooTitle/i);
     expect(titleElement).toBeInTheDocument();
   });
 
