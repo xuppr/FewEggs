@@ -1,6 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import ProductsList, { productsListLoader } from "./ProductsList";
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
+import {
+  LoaderFunctionArgs,
+  RouterProvider,
+  createMemoryRouter,
+} from "react-router-dom";
 import { getAllProducts } from "../api";
 
 jest.mock("../api", () => {
@@ -16,7 +20,9 @@ test("product list page loader", async () => {
       { title: "title1", id: 1 },
     ],
   });
-  const result = await productsListLoader();
+  const result = await productsListLoader({
+    request: new Request(""),
+  } as LoaderFunctionArgs);
   expect(result).toEqual({
     products: [
       { title: "title0", id: 0 },

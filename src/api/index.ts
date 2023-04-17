@@ -10,12 +10,20 @@ export const getProduct = async (id: string) => {
   return await result.json();
 };
 
-export const getProductsByCategory = async (categoryId: string) => {
-  const result = await fetch(`${baseUrl}/category/${categoryId}`);
-  return await result.json();
+export const getProductsByCategory = async (category: string) => {
+  const data = await getAllProducts();
+  return {
+    products: data.products.filter(
+      (product: { category: string }) => product.category === category
+    ),
+  };
 };
 
-export const getProductsByBrand = async (brandId: string) => {
-  const result = await fetch(`${baseUrl}/brand/${brandId}`);
-  return await result.json();
+export const getProductsByBrand = async (brand: string) => {
+  const data = await getAllProducts();
+  return {
+    products: data.products.filter(
+      (product: { brand: string }) => product.brand === brand
+    ),
+  };
 };

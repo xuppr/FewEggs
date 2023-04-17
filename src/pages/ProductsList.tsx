@@ -16,38 +16,34 @@ interface ProductType {
 
 interface ProductListData {
   products: ProductType[];
-  activeFilter?: string[];
+  activeFilter?: string[] | null;
   notFound?: boolean;
 }
 
-export const productsListLoader = async (): Promise<ProductListData> => {
-  const productsListData = await getAllProducts();
-  return productsListData;
-};
-
-export const productsListFilterLoader = async ({
-  params,
+export const productsListLoader = async ({
+  request,
 }: LoaderFunctionArgs): Promise<ProductListData> => {
   let listData = null;
+  let activeFilter = null;
 
-  if (
-    params.filterName === "category" &&
-    params.filterId &&
-    ["laptops", "smartphones"].includes(params.filterId)
-  ) {
-    listData = await getProductsByCategory(params.filterId);
-  } else if (
-    params.filterName === "brand" &&
-    params.filterId &&
-    ["apple", "oppo", "samsung"].includes(params.filterId)
-  ) {
-    listData = await getProductsByBrand(params.filterId);
+  const searchParams = new URL(request.url).searchParams;
+  const category = searchParams.get("category");
+  const brand = searchParams.get("brand");
+
+  if (category && ["laptops", "smartphones"].includes(category)) {
+    listData = await getProductsByCategory(category);
+    activeFilter = ["category", category];
+  } else if (brand && ["Apple", "Oppo", "Samsung"].includes(brand)) {
+    listData = await getProductsByBrand(brand);
+    activeFilter = ["brand", brand];
+  } else if (!category && !brand) {
+    listData = await getAllProducts();
   }
 
   return listData
     ? {
         products: listData.products,
-        activeFilter: [params.filterName!, params.filterId!],
+        activeFilter,
       }
     : { products: [], notFound: true };
 };
@@ -56,8 +52,9 @@ const ProductsList = () => {
   const data = useLoaderData() as ProductListData;
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="flex flex-col justify-center items-center w-full px-14 my-20">
       <Filters
+        className="self-start"
         activeFilter={data.activeFilter}
         filters={[
           {
@@ -66,6 +63,15 @@ const ProductsList = () => {
             values: [
               { name: "informatica", value: "laptops" },
               { name: "telefonia", value: "smartphones" },
+            ],
+          },
+          {
+            name: "brand",
+            filterValue: "brand",
+            values: [
+              { name: "apple", value: "Apple" },
+              { name: "oppo", value: "Oppo" },
+              { name: "samsung", value: "Samsung" },
             ],
           },
         ]}

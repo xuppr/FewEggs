@@ -9,7 +9,7 @@ type FilterItemType = {
   name: string;
   filterValue: string;
   values: FilterItemValue[];
-  matchActiveFilter?: string[];
+  matchActiveFilter?: string[] | null;
 };
 
 const FilterItem = ({
@@ -21,20 +21,20 @@ const FilterItem = ({
   const navigate = useNavigate();
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-7">
       <div className="font-semibold">{name.toUpperCase()}</div>
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         {values.map((value) => (
           <div
             className={`font-light cursor-pointer ${
               matchActiveFilter &&
-              matchActiveFilter[0] === value.name &&
+              matchActiveFilter[0] === filterValue &&
               matchActiveFilter[1] === value.value
                 ? "font-normal"
                 : ""
             }`}
             key={value.name}
-            onClick={() => navigate(`/products/${filterValue}/${value.value}`)}
+            onClick={() => navigate(`/products?${filterValue}=${value.value}`)}
           >
             {value.name.toUpperCase()}
           </div>
@@ -46,13 +46,15 @@ const FilterItem = ({
 
 interface FiltersProps {
   filters: FilterItemType[];
-  activeFilter?: string[];
+  activeFilter?: string[] | null;
+  className?: string;
 }
 
-const Filters = ({ filters, activeFilter }: FiltersProps) => (
-  <div className="flex">
+const Filters = ({ filters, activeFilter, className }: FiltersProps) => (
+  <div className={`flex gap-16 w-fit ${className}`}>
     {filters.map((filter) => (
       <FilterItem
+        key={filter.name}
         matchActiveFilter={activeFilter}
         name={filter.name}
         values={filter.values}

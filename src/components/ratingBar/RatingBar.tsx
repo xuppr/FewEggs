@@ -10,7 +10,7 @@ const RatingBar = ({ value }: RatingBarProps) => (
       if (value >= v) {
         return <Star key={v} className="w-7 fill-yellow-400" />;
       }
-      return <Star className="w-7 fill-slate-400" />;
+      return <Star key={v} className="w-7 fill-slate-400" />;
     })}
   </div>
 );
