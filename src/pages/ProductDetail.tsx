@@ -92,7 +92,7 @@ const ProductDetail = () => {
         <div className="flex flex-col justify-center items-center md:items-start max-w-sm">
           <div className="flex flex-col items-center md:items-start">
             <div className="font-semibold text-2xl">{title}</div>
-            <div className="font-extralight text-2xl">€{price}</div>
+            <div className="font-extralight text-2xl">€ {price}</div>
           </div>
 
           <ProductField name="DESCRIZIONE" value={description} />
