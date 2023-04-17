@@ -8,7 +8,7 @@ const Header = () => {
   const { selectedProductsCount } = useContext(RootContext);
 
   return (
-    <header className="flex items-center justify-between py-7">
+    <header className="flex items-center justify-between mx-2">
       <Link to="/products" className="font-semibold text-2xl cursor-pointer">
         FewEggs
       </Link>

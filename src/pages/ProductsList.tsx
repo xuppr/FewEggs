@@ -52,7 +52,7 @@ const ProductsList = () => {
   const data = useLoaderData() as ProductListData;
 
   return (
-    <div className="flex flex-col justify-center items-center w-full px-14 my-20">
+    <div className="flex flex-col justify-center items-center w-full my-20">
       <Filters
         className="self-start"
         activeFilter={data.activeFilter}

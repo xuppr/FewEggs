@@ -51,8 +51,12 @@ const ProductDetail = () => {
 
   return (
     <div className="flex flex-col mt-14">
-      <Breadcrumbs productTitle={title} category={category} className="ml-7" />
-      <div className="flex flex-col items-center justify-center md:flex-row md:items-start gap-16 md:gap-24 mt-20">
+      <Breadcrumbs
+        productTitle={title}
+        category={category}
+        className="ml-4 md:ml-14"
+      />
+      <div className="flex flex-col items-center justify-center md:flex-row md:items-start gap-16 md:gap-24 mt-7 md:mt-20">
         <div className="flex flex-col md:self-auto w-250px lg:w-294px">
           <div className="shadow-3xl">
             <Swiper

@@ -121,7 +121,7 @@ const SmFilters = ({ filters, activeFilter, className }: FiltersProps) => {
         />
       </div>
       <div
-        className={`flex flex-col gap-2 ml-2 pl-3 border-l border-l-black transition-[max-height] overflow-hidden ${
+        className={`flex flex-col gap-2 ml-2 pl-3 border-l border-l-black transition-[max-height] duration-500 overflow-hidden ${
           isOpen ? "max-h-32 " : "max-h-0"
         }`}
       >
