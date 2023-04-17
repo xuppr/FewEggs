@@ -60,8 +60,8 @@ test("renders details for a product", async () => {
   render(<RouterProvider router={router} />);
 
   await waitFor(() => {
-    const titleElement = screen.getByText(/FooTitle/i);
-    expect(titleElement).toBeInTheDocument();
+    const titleElements = screen.getAllByText(/FooTitle/i);
+    expect(titleElements).toHaveLength(2);
   });
 
   const priceElement = screen.getByText(/259/i);
@@ -70,8 +70,8 @@ test("renders details for a product", async () => {
   const descriptionElement = screen.getByText(/Foo product by FooBrand/i);
   expect(descriptionElement).toBeInTheDocument();
 
-  const categoryElement = screen.getByText(/FooCategory/i);
-  expect(categoryElement).toBeInTheDocument();
+  const categoryElements = screen.getAllByText(/FooCategory/i);
+  expect(categoryElements).toHaveLength(2);
 
   const imageElement = screen.getByAltText(/Foo/);
   expect(imageElement).toBeInTheDocument();

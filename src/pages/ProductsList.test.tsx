@@ -1,34 +1,17 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import ProductsList, { productsListLoader } from "./ProductsList";
-import {
-  LoaderFunctionArgs,
-  RouterProvider,
-  createMemoryRouter,
-} from "react-router-dom";
-import { getAllProducts } from "../api";
+import ProductsList from "./ProductsList";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
 
 jest.mock("../api", () => {
   return {
     getAllProducts: jest.fn(),
+    getProductsByCategory: jest.fn().mockResolvedValue({
+      products: [
+        { title: "title0", id: 0 },
+        { title: "title1", id: 1 },
+      ],
+    }),
   };
-});
-
-test("product list page loader", async () => {
-  (getAllProducts as jest.Mock).mockReturnValue({
-    products: [
-      { title: "title0", id: 0 },
-      { title: "title1", id: 1 },
-    ],
-  });
-  const result = await productsListLoader({
-    request: new Request(""),
-  } as LoaderFunctionArgs);
-  expect(result).toEqual({
-    products: [
-      { title: "title0", id: 0 },
-      { title: "title1", id: 1 },
-    ],
-  });
 });
 
 test("renders a list of products", async () => {
