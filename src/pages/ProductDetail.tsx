@@ -4,9 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import "swiper/swiper-bundle.min.css";
 import SliderController from "../components/sliderController/SliderController";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Controller, Autoplay } from "swiper";
 import RatingBar from "../components/ratingBar/RatingBar";
+import RootContext from "../context/RootContext";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 interface ProductDetailData {
   id: number;
   title: string;
@@ -45,56 +47,63 @@ const ProductDetail = () => {
   const [controlledSwiper, setControlledSwiper] = useState<SwiperCore | null>(
     null
   );
+  const { setSelectedProductsCount } = useContext(RootContext);
 
   return (
-    <div className="flex flex-col items-center justify-center md:flex-row md:items-start gap-16 md:gap-24">
-      <div className="flex flex-col md:self-auto w-250px lg:w-294px">
-        <div className="shadow-3xl">
-          <Swiper
-            className="w-full"
-            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            modules={[Controller, Autoplay]}
-            onSwiper={setControlledSwiper}
+    <div className="flex flex-col mt-14">
+      <Breadcrumbs productTitle={title} category={category} className="ml-7" />
+      <div className="flex flex-col items-center justify-center md:flex-row md:items-start gap-16 md:gap-24 mt-20">
+        <div className="flex flex-col md:self-auto w-250px lg:w-294px">
+          <div className="shadow-3xl">
+            <Swiper
+              className="w-full"
+              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[Controller, Autoplay]}
+              onSwiper={setControlledSwiper}
+            >
+              {images.map((imageSrc) => (
+                <SwiperSlide className="h-full w-full" key={imageSrc}>
+                  <img
+                    className="bg-white w-full h-250px lg:h-294px object-contain "
+                    alt={title}
+                    src={imageSrc}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <SliderController
+            className="self-center mt-6 lg:m-9"
+            activeIndex={activeIndex}
+            slidesCount={images.length}
+            swiper={controlledSwiper}
+          />
+        </div>
+
+        <div className="flex flex-col justify-center items-center md:items-start max-w-sm">
+          <div className="flex flex-col items-center md:items-start">
+            <div className="font-semibold text-2xl">{title}</div>
+            <div className="font-extralight text-2xl">€{price}</div>
+          </div>
+
+          <ProductField name="DESCRIZIONE" value={description} />
+          <ProductField name="BRAND" value={brand} />
+          <ProductField name="CATEGORIA" value={category} />
+          <div className="mt-6">
+            <div className="font-semibold text-xl">RECENSIONI</div>
+            <RatingBar value={rating} />
+          </div>
+          <button
+            onClick={() => setSelectedProductsCount((prev) => prev + 1)}
+            className="w-fit p-3.5 font-semibold text-xl mt-12 bg-black text-white rounded-3xl md:rounded cursor-pointer transition-transform hover:scale-105 active:scale-100"
           >
-            {images.map((imageSrc) => (
-              <SwiperSlide className="h-full w-full" key={imageSrc}>
-                <img
-                  className="bg-white w-full h-250px lg:h-294px object-contain "
-                  alt={title}
-                  src={imageSrc}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <SliderController
-          className="self-center mt-6 lg:m-9"
-          activeIndex={activeIndex}
-          slidesCount={images.length}
-          swiper={controlledSwiper}
-        />
-      </div>
-
-      <div className="flex flex-col justify-center items-center md:items-start max-w-sm">
-        <div className="flex flex-col items-center md:items-start">
-          <div className="font-semibold text-2xl">{title}</div>
-          <div className="font-extralight text-2xl">€{price}</div>
-        </div>
-
-        <ProductField name="DESCRIZIONE" value={description} />
-        <ProductField name="BRAND" value={brand} />
-        <ProductField name="CATEGORIA" value={category} />
-        <div className="mt-6">
-          <div className="font-semibold text-xl">RECENSIONI</div>
-          <RatingBar value={rating} />
-        </div>
-        <div className="w-fit p-3.5 font-semibold text-xl mt-12 bg-black text-white rounded-3xl md:rounded cursor-pointer transition-transform hover:scale-105 active:scale-100">
-          AGGIUNGI AL CARRELLO
+            AGGIUNGI AL CARRELLO
+          </button>
         </div>
       </div>
     </div>

@@ -3,10 +3,12 @@ import {
   redirect,
   RouterProvider,
 } from "react-router-dom";
+import RootContext from "./context/RootContext";
 import Root, { rootLoader } from "./pages/Root";
 import ProductsList, { productsListLoader } from "./pages/ProductsList";
 import ProductDetail, { productDetailLoader } from "./pages/ProductDetail";
 import Error from "./pages/Error";
+import { useState } from "react";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,15 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  const [selectedProductsCount, setSelectedProductsCount] = useState(0);
+
+  return (
+    <RootContext.Provider
+      value={{ selectedProductsCount, setSelectedProductsCount }}
+    >
+      <RouterProvider router={router} />
+    </RootContext.Provider>
+  );
 }
 
 export default App;
